@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Flat, SearchLine
+from .models import Flat, AdminFeature
 
 
-admin.site.register(Flat, SearchLine)
+admin.site.register(Flat, AdminFeature)

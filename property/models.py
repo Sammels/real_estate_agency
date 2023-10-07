@@ -13,7 +13,6 @@ class AdminFeature(admin.ModelAdmin):
 class Flat(models.Model):
     owner = models.CharField('ФИО владельца', max_length=200)
     owners_phonenumber = models.CharField('Номер владельца', max_length=20)
-    new_building = models.BooleanField(db_index=True, null=True)
     created_at = models.DateTimeField(
         'Когда создано объявление',
         default=timezone.now,
@@ -55,6 +54,11 @@ class Flat(models.Model):
         null=True,
         blank=True,
         db_index=True)
+
+    new_building = models.BooleanField(verbose_name="Новостройка",
+                                       default=True,
+                                       db_index=True,
+                                       null=True,)
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'

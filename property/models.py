@@ -2,15 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
-from django.contrib import admin
-
-class AdminFeature(admin.ModelAdmin):
-    search_fields = ["town", "address", "owner"]
-    readonly_fields = ["created_at"]
-    list_display = ("address", "price", "new_building", "construction_year", "town")
-    list_editable = ["new_building"]
-    list_filter = ("new_building", "rooms_number", "has_balcony")
-
 
 class Flat(models.Model):
     owner = models.CharField('ФИО владельца', max_length=200)
@@ -60,18 +51,20 @@ class Flat(models.Model):
     new_building = models.BooleanField(verbose_name="Новостройка",
                                        default=True,
                                        db_index=True,
-                                       null=True,)
+                                       null=True, )
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
 
 
 class Complaint(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
                              verbose_name="Кто жаловался",
-                             related_name="complaints",)
+                             related_name="complaints", )
 
-    flat = models.ForeignKey(Flat, on_delete=models.CASCADE,
+    flat = models.ForeignKey(Flat,
+                             on_delete=models.CASCADE,
                              verbose_name="На какую квартиру",
                              related_name="complaints")
     text = models.TextField(verbose_name="Текст жалобы")
